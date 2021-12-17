@@ -10,6 +10,11 @@ fn get_inc() -> String {
     String::from("inc")
 }
 
+fn get_dec() -> String {
+    // len of 4
+    String::from("decc")
+}
+
 fn get_out() -> String {
     // len of 7
     String::from("outputa")
@@ -28,6 +33,20 @@ fn get_fwd() -> String {
 fn get_bak() -> String {
     // len of 6
     String::from("moveba")
+}
+
+fn get_if() -> String {
+    // len of 1
+    String::from("i")
+}
+
+fn get_eif() -> String {
+    // len of 2
+    String::from("ei")
+}
+
+fn set_current_mem_to_zero() -> String {
+    format!("{} {} {} {}", get_if(), get_dec(), get_word_of_len(1), get_eif())
 }
 
 fn translate_to_inc(c: &char) -> String {
@@ -65,7 +84,7 @@ fn main() {
 
         println!("{}", get_out());
 
-        println!("{} {}", get_fwd(), get_word_of_len(1));
+        println!("{}", set_current_mem_to_zero());
     }
 
     println!("{}", get_end());
