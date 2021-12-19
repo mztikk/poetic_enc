@@ -46,13 +46,18 @@ fn get_eif() -> String {
 }
 
 fn set_current_mem_to_zero() -> String {
-    format!("{} {} {} {}", get_if(), get_dec(), get_word_of_len(1), get_eif())
+    format!(
+        "{} {} {} {}",
+        get_if(),
+        get_dec(),
+        get_word_of_len(1),
+        get_eif()
+    )
 }
 
-fn translate_to_inc(c: &char) -> String {
-    let ascii_value = *c as u8;
-    let times = ascii_value / 9;
-    let rest = ascii_value % 9;
+fn translate_to_inc(n: i32) -> String {
+    let times = n / 9;
+    let rest = n % 9;
 
     let mut result = Vec::new();
 
@@ -62,6 +67,23 @@ fn translate_to_inc(c: &char) -> String {
 
     if rest > 0 {
         result.push(format!("{} {}", get_inc(), get_word_of_len(rest as usize)));
+    }
+
+    result.join("\n")
+}
+
+fn translate_to_dec(n: i32) -> String {
+    let times = n / 9;
+    let rest = n % 9;
+
+    let mut result = Vec::new();
+
+    for _ in 0..times {
+        result.push(format!("{} {}", get_dec(), get_word_of_len(9)));
+    }
+
+    if rest > 0 {
+        result.push(format!("{} {}", get_dec(), get_word_of_len(rest as usize)));
     }
 
     result.join("\n")
@@ -79,12 +101,25 @@ fn main() {
     let chars = buf.chars().collect::<Vec<char>>();
     // let len = chars.len();
 
+    let mut last_val: u8 = 0;
     for c in chars {
-        println!("{}", translate_to_inc(&c));
+        let ascii_value = c as u8;
+        let diff_to_last = ascii_value as i32 - last_val as i32;
+        let diff_to_last_abs = diff_to_last.abs();
+
+        match diff_to_last.cmp(&0) {
+            std::cmp::Ordering::Less => {
+                println!("{}", translate_to_dec(diff_to_last_abs));
+            }
+            std::cmp::Ordering::Greater => {
+                println!("{}", translate_to_inc(diff_to_last_abs));
+            }
+            std::cmp::Ordering::Equal => {}
+        }
 
         println!("{}", get_out());
 
-        println!("{}", set_current_mem_to_zero());
+        last_val = ascii_value;
     }
 
     println!("{}", get_end());
