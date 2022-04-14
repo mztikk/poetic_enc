@@ -99,20 +99,18 @@ fn main() {
     stdin.read_to_string(&mut buf).unwrap();
 
     let chars = buf.chars().collect::<Vec<char>>();
-    // let len = chars.len();
 
     let mut last_val: u8 = 0;
     for c in chars {
         let ascii_value = c as u8;
         let diff_to_last = ascii_value as i32 - last_val as i32;
-        let diff_to_last_abs = diff_to_last.abs();
 
         match diff_to_last.cmp(&0) {
             std::cmp::Ordering::Less => {
-                println!("{}", translate_to_dec(diff_to_last_abs));
+                println!("{}", translate_to_dec(diff_to_last.abs()));
             }
             std::cmp::Ordering::Greater => {
-                println!("{}", translate_to_inc(diff_to_last_abs));
+                println!("{}", translate_to_inc(diff_to_last.abs()));
             }
             std::cmp::Ordering::Equal => {}
         }

@@ -11,5 +11,4 @@ codegen-units = 1
 strip = true
 
 [dependencies]
-atty = "0.2"
-structopt = "0.3"
+atty = "0.2.14"
