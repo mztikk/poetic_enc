@@ -225,11 +225,10 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use std::sync::{Arc, Mutex};
-
-    use poetic::{interpreter::Interpreter, parser::Parser};
-
     use super::*;
+    use poetic::{interpreter::Interpreter, parser::Parser};
+    use rstest::*;
+    use std::sync::{Arc, Mutex};
 
     fn run_and_get_output(input: &str) -> String {
         let encoded = Encoder::new(input).collect::<Vec<String>>().join(" ");
@@ -246,16 +245,11 @@ mod tests {
         return result.lock().unwrap().to_string();
     }
 
-    #[test]
-    fn encoded_should_decode() {
-        let input = "test";
+    #[rstest]
+    #[case("test")]
+    #[case("täßt")]
+    fn encoded_should_decode(#[case] input: &str) {
         let result = run_and_get_output(input);
-
-        assert_eq!(result, input);
-
-        let input = "täßt";
-        let result = run_and_get_output(input);
-
         assert_eq!(result, input);
     }
 }

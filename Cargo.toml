@@ -16,3 +16,4 @@ rand = "0.8.5"
 
 [dev-dependencies]
 poetic = "0.3.0"
+rstest = "0.23.0"
