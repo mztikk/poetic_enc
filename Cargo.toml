@@ -13,3 +13,6 @@ strip = true
 [dependencies]
 atty = "0.2.14"
 rand = "0.8.5"
+
+[dev-dependencies]
+poetic = "0.3.0"
