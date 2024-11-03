@@ -1,28 +1,53 @@
 use atty::Stream;
-use std::io::{self, Read};
+use rand::Rng;
+use std::{
+    collections::HashMap,
+    io::{self, Read},
+    sync::LazyLock,
+};
+
+static WORD_LOOKUP: LazyLock<HashMap<usize, Vec<&str>>> = LazyLock::new(|| {
+    let mut word_lookup = HashMap::<usize, Vec<&str>>::with_capacity(10000);
+    let wordlist = include_str!("wordlist.10000.txt");
+    wordlist.lines().for_each(|word| {
+        word_lookup
+            .entry(word.len())
+            .and_modify(|f| f.push(word))
+            .or_insert(vec![word]);
+    });
+
+    word_lookup
+});
 
 fn get_word_of_len(len: usize) -> String {
-    str::repeat("a", len)
+    match WORD_LOOKUP.get(&len) {
+        Some(words) => words[rand::thread_rng().gen_range(0..words.len())].to_string(),
+        None => str::repeat("a", len),
+    }
 }
 
 fn get_inc() -> String {
     // len of 3
-    String::from("inc")
+    // String::from("inc")
+    get_word_of_len(3)
 }
 
 fn get_dec() -> String {
     // len of 4
-    String::from("decc")
+    // String::from("decc")
+    get_word_of_len(4)
 }
 
 fn get_out() -> String {
     // len of 7
-    String::from("outputa")
+    // String::from("outputa")
+    get_word_of_len(7)
 }
 
 fn get_end() -> String {
     // len of 10 / 0
-    String::from("endprogram")
+    // String::from("endprogram")
+    get_word_of_len(10)
 }
 
 fn get_fwd() -> String {
