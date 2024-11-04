@@ -130,7 +130,7 @@ fn translate_to_inc(n: i32) -> String {
         ));
     }
 
-    result.join("\n")
+    result.join(get_separator().as_str())
 }
 
 fn translate_to_dec(n: i32) -> String {
@@ -157,7 +157,7 @@ fn translate_to_dec(n: i32) -> String {
         ));
     }
 
-    result.join("\n")
+    result.join(get_separator().as_str())
 }
 
 struct Encoder<'a> {
@@ -248,6 +248,7 @@ mod tests {
     #[rstest]
     #[case("test")]
     #[case("täßt")]
+    #[case("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l")]
     fn encoded_should_decode(#[case] input: &str) {
         let result = run_and_get_output(input);
         assert_eq!(result, input);
