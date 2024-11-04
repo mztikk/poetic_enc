@@ -1,27 +1,14 @@
 use atty::Stream;
 use rand::{distributions::Standard, prelude::Distribution, Rng};
 use std::{
-    collections::HashMap,
     io::{self, Read},
     str::Chars,
-    sync::LazyLock,
 };
 
-static WORD_LOOKUP: LazyLock<HashMap<usize, Vec<&str>>> = LazyLock::new(|| {
-    let mut word_lookup = HashMap::<usize, Vec<&str>>::with_capacity(10000);
-    let wordlist = include_str!("wordlist.10000.txt");
-    wordlist.lines().for_each(|word| {
-        word_lookup
-            .entry(word.len())
-            .and_modify(|f| f.push(word))
-            .or_insert(vec![word]);
-    });
-
-    word_lookup
-});
+include!(concat!(env!("OUT_DIR"), "/const_gen.rs"));
 
 fn get_word_of_len(len: usize) -> String {
-    match WORD_LOOKUP.get(&len) {
+    match WORD_LOOKUP.get(&(len as u64)) {
         Some(words) => words[rand::thread_rng().gen_range(0..words.len())].to_string(),
         None => str::repeat("a", len),
     }
