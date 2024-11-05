@@ -224,9 +224,10 @@ mod tests {
         let result = Arc::new(Mutex::new(String::new()));
         let result_clone = result.clone();
 
-        let mut interpreter = Interpreter::new(instructions).with_output(Box::new(move |s| {
-            result_clone.lock().unwrap().push_str(s.as_str());
-        }));
+        let mut interpreter =
+            Interpreter::new(instructions).with_output(Box::new(move |s: String| {
+                result_clone.lock().unwrap().push_str(s.as_str());
+            }));
         interpreter.run();
 
         return result.lock().unwrap().to_string();

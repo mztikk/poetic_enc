@@ -271,9 +271,9 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
 name = "poetic"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5f1a3ea1a025d0843532679c83c224904bab74cde014e4e3f706328dd4fd023e"
+checksum = "7f18f4aa8457f1d3771caddd13a103bd398c0439308e641f11829196e5c64a8e"
 dependencies = [
  "rand",
  "split-digits",
@@ -454,9 +454,9 @@ dependencies = [
 
 [[package]]
 name = "split-digits"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3a7adcfb6d58efd3f456b631eadbcae0ebd9ca47fdf5563a8349c54cc4c14b8"
+checksum = "c35d068f517f96390c545b32f8d5d3b8e46c25738b42ba9ed52e1d617dd4a703"
 
 [[package]]
 name = "syn"
